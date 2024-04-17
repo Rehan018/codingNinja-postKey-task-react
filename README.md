@@ -1,3 +1,6 @@
+Output:
+<img src="https://res.cloudinary.com/dl26pbek4/image/upload/v1678339542/cn-gifs/postkeeper-app_zq4dms.gif" >
+
 1. **Post Context Creation (postContext.js):**
    - **Original**: The initial step was to create a context for managing posts. This context will provide the necessary state and functions to components that need to interact with posts.
    - **Changes**: 
