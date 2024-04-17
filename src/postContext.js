@@ -1,19 +1,32 @@
+import { useState, useContext, createContext } from "react";
 
-import React,{createContext, useState,useContext} from 'react';
-const PostContext=createContext();
-export const usePostContext=()=>useContext(PostContext);
-export const PostProvider=({children})=>{
-    const [savedPosts,setSavedPosts]=useState([]);
-    const addPost=(post)=>{
-        setSavedPosts((provPost)=>[...provPost,post]);
-    };
-    const resetPosts=()=>{
-        setSavedPosts([]);
-    };
-    return (
+const postContext = createContext();
 
-        <PostContext.Provider value={{savedPosts,addPost,resetPosts}}>
-            {children}
-        </PostContext.Provider>
-    );
-}
+export const usePostsValue = () => {
+  const value = useContext(postContext);
+  return value;
+};
+
+export const PostContextProvider = ({ children }) => {
+  const [savedPosts, setSavedPosts] = useState([]);
+
+  const resetPosts = () => setSavedPosts([]);
+
+  const isPostSaved = (post) => !!savedPosts.find((p) => p.id === post.id);
+
+  const savePost = (post) => {
+    const isSaved = isPostSaved(post);
+    if (isSaved) {
+      return alert("Post is already saved.");
+    }
+    setSavedPosts((prev) => [post, ...prev]);
+  };
+
+  return (
+    <postContext.Provider
+      value={{ savedPosts, setSavedPosts, resetPosts, savePost, isPostSaved }}
+    >
+      {children}
+    </postContext.Provider>
+  );
+};
